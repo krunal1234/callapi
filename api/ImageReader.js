@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 router.use(express.json());
 
 // Define the POST route to handle requests
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const { imagePath } = req.body; // You can expect `imagePath` to be part of the request body
     const requestId = uuidv4(); // Unique request identifier for easier tracking
 
