@@ -11,6 +11,9 @@ const SpeechToText = require('./api/SpeechToText.js');
 const ImageReader = require('./api/ImageReader.js');
 const TextToSpeech = require('./api/TextToSpeech.js');
 const BackgroundRemover = require('./api/BackgroundRemover.js');
+import cluster from 'cluster';
+import os from 'os';
+
 
 // Serve the swagger.json file statically
 app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
