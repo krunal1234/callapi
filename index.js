@@ -14,7 +14,7 @@ const BackgroundRemover = require('./api/BackgroundRemover.js');
 import cluster from 'cluster';
 import os from 'os';
 
-
+const totalCPUs = os.cpus().length;
 // Serve the swagger.json file statically
 // Serve Swagger JSON from the 'public' directory
 //app.use('/swagger.json', express.static(path.join(__dirname, 'public', 'swagger.json')));
