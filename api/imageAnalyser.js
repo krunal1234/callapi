@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 router.use(express.json());
 
 // Define the POST route to handle requests
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     let { imagePath, question } = req.body;
     const ApiKey = "";  // Ideally, should come from a secure environment variable or config.
     imagePath = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Split_Aloe.jpg/800px-Split_Aloe.jpg';
