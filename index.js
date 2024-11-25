@@ -16,11 +16,11 @@ import os from 'os';
 
 
 // Serve the swagger.json file statically
-app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
+// Serve Swagger JSON from the 'public' directory
+app.use('/swagger.json', express.static(path.join(__dirname, 'public', 'swagger.json')));
 
 // Set up Swagger UI
-const swaggerDocument = require('./swagger.json');
-const { redirect } = require('express/lib/response.js');
+const swaggerDocument = require(path.join(__dirname, 'public', 'swagger.json'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const API_KEY = 'test';
