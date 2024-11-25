@@ -16,7 +16,7 @@ const BackgroundRemover = require('./api/BackgroundRemover.js');
 app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
 
 // Set up Swagger UI
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('../swagger.json');
 const { redirect } = require('express/lib/response.js');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
