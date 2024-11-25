@@ -9,12 +9,4 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "apexify": "^4.2.8",
-    "apexify.js": "^4.5.41",
-    "express": "^4.21.1",
-    "nodemon": "^3.1.7",
-    "swagger-ui-express": "^5.0.1",
-    "uuid": "^11.0.3"
-  }
 }
