@@ -13,7 +13,6 @@ const TextToSpeech = require('./api/TextToSpeech.js');
 const BackgroundRemover = require('./api/BackgroundRemover.js');
 
 // Serve the swagger.json file statically
-app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
 
 // Set up Swagger UI
 const swaggerDocument = require('../swagger.json');
