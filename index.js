@@ -17,7 +17,7 @@ import os from 'os';
 
 // Serve the swagger.json file statically
 // Serve Swagger JSON from the 'public' directory
-app.use('/swagger.json', express.static(path.join(__dirname, 'public', 'swagger.json')));
+//app.use('/swagger.json', express.static(path.join(__dirname, 'public', 'swagger.json')));
 
 // Set up Swagger UI
 const swaggerDocument = require(path.join(__dirname, 'public', 'swagger.json'));
