@@ -15,14 +15,11 @@ import cluster from 'cluster';
 import os from 'os';
 
 const totalCPUs = os.cpus().length;
-// Serve the swagger.json file statically
-// Serve Swagger JSON from the 'public' directory
-//app.use('/swagger.json', express.static(path.join(__dirname, 'public', 'swagger.json')));
-
-// Set up Swagger UI
-const swaggerDocument = require(path.join(__dirname, 'public', 'swagger.json'));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+// Use Swagger UI and point to the external swagger.json URL
+const swaggerOptions = {
+  swaggerUrl: '/swagger.json',
+};
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
