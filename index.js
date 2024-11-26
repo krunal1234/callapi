@@ -25,6 +25,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 // Serve the swagger.json file statically
 app.use('/swagger.json', express.static(path.join(__dirname, '/public/swagger.json')));
