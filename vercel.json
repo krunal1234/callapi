@@ -6,15 +6,6 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/tesseract.js": {
-      "runtime": "nodejs16.x",
-      "memory": 1024
-    }
-  },
-  "static": {
-    "directory": "public"
-  },
   "routes": [
     {
       "src": "/swagger.json",
