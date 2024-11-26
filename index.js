@@ -19,7 +19,7 @@ const totalCPUs = os.cpus().length;
 const swaggerOptions = {
   swaggerUrl: '/swagger.json',
 };
-app.use('/swagger.json', express.static(path.join(__dirname, 'public/swagger.json')));
+app.use('/swagger.json', express.static(path.join(null, 'swagger.json')));
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
