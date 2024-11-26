@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/swagger.json",
-      "dest": "/public/swagger.json"
+      "dest": "/public/$1"
     },
     {
       "src": "/api-docs(.*)",
