@@ -16,14 +16,12 @@ import os from 'os';
 
 const totalCPUs = os.cpus().length;
 // Use Swagger UI and point to the external swagger.json URL
-const swaggerOptions = {
-  swaggerUrl: '/public/swagger.json',
-};
+// Swagger setup
+const swaggerDocument = require('./public/swagger.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
-
+// Serve static files (Swagger JSON)
 app.use('/swagger.json', express.static(path.join(__dirname, 'public/swagger.json')));
-
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
