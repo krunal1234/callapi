@@ -94,3 +94,5 @@ if (cluster.isPrimary) {
         console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
     });
 }
+
+export default app;
