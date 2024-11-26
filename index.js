@@ -19,6 +19,9 @@ const totalCPUs = os.cpus().length;
 const swaggerOptions = {
   swaggerUrl: '/swagger.json',
 };
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
+
 app.use('/swagger.json', express.static(path.join(null, 'swagger.json')));
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
