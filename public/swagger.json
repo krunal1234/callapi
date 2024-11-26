@@ -17,7 +17,7 @@
       "ApiKeyAuth": {
         "type": "apiKey",
         "in": "header",
-        "name": "api-key"  
+        "name": "api-key"
       }
     }
   },
@@ -53,7 +53,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Data Successfull"
+                      "example": "Data Successful"
                     },
                     "user_id": {
                       "type": "string",
@@ -78,71 +78,70 @@
         "tags": ["Models"],
         "summary": "Analyze Image",
         "operationId": "ApexImageAnalyzer",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "imagePath": {
-                    "type": "string",
-                    "description": "URL of the image to analyze"
-                  },
-                  "question": {
-                    "type": "string",
-                    "description": "The question to ask based on the image content"
-                  }
-                },
-                "required": ["imagePath", "question"]
-              }
+        "parameters": [
+          {
+            "name": "imagePath",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "URL of the image to analyze"
             }
           },
-          "responses": {
-            "200": {
-              "description": "Image analysis completed successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "statusCode": {
-                        "type": "integer",
-                        "example": 200
-                      },
-                      "success": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Image Analyser processed successfully"
-                      },
-                      "response": {
-                        "type": "object",
-                        "properties": {
-                          "responseTime": {
-                            "type": "string",
-                            "description": "Time taken for the analysis"
-                          }
+          {
+            "name": "question",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The question to ask based on the image content"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image analysis completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Image Analyser processed successfully"
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "responseTime": {
+                          "type": "string",
+                          "description": "Time taken for the analysis"
                         }
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "executionTime": {
-                        "type": "integer",
-                        "description": "The execution time in milliseconds"
                       }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "executionTime": {
+                      "type": "integer",
+                      "description": "The execution time in milliseconds"
                     }
                   }
                 }
               }
-            },
-            "500": {
-              "description": "Internal Server Error"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -173,7 +172,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Data Successfull"
+                      "example": "Data Successful"
                     },
                     "user_id": {
                       "type": "string",
@@ -198,57 +197,61 @@
         "tags": ["Models"],
         "summary": "Chat with GPT-3.5",
         "operationId": "ApexChat",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "related_content": {
-                    "type": "string",
-                    "description": "Content or documentation to base the chat on"
-                  },
-                  "question": {
-                    "type": "string",
-                    "description": "The question to ask GPT"
-                  },
-                  "ApiKey": {
-                    "type": "string",
-                    "description": "API Key for authentication"
-                  }
-                },
-                "required": ["related_content", "question", "ApiKey"]
-              }
+        "parameters": [
+          {
+            "name": "related_content",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Content or documentation to base the chat on"
             }
           },
-          "responses": {
-            "200": {
-              "description": "Chat response processed successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string",
-                        "example": "Chat processed successfully"
-                      },
-                      "response": {
-                        "type": "string",
-                        "description": "The GPT-3.5 generated response"
-                      }
+          {
+            "name": "question",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The question to ask GPT"
+            }
+          },
+          {
+            "name": "ApiKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat response processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Chat processed successfully"
+                    },
+                    "response": {
+                      "type": "string",
+                      "description": "The GPT-3.5 generated response"
                     }
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "500": {
-              "description": "Internal Server Error"
             }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -279,7 +282,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Data Successfull"
+                      "example": "Data Successful"
                     },
                     "user_id": {
                       "type": "string",

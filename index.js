@@ -1,42 +1,68 @@
-const express = require('express');
-const app = express();
-const swaggerUi = require('swagger-ui-express');
-const path = require('path');
-const fs = require('fs');
-const getUser = require('./api/getUser.js');
-const chat = require('./api/chat.js');
-const imageAnalyser = require('./api/imageAnalyser.js');
-const FileReader = require('./api/FileReader.js');
-const SpeechToText = require('./api/SpeechToText.js');
-const ImageReader = require('./api/ImageReader.js');
-const TextToSpeech = require('./api/TextToSpeech.js');
-const BackgroundRemover = require('./api/BackgroundRemover.js');
-const cluster = require('cluster');
-const os = require('os');
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import { fileURLToPath } from 'url'; // Import fileURLToPath utility
+import fs from 'fs'; // Import fs module to read the Swagger file
+import getUser from './api/getUser.js';
+import chat from './api/chat.js';
+import imageAnalyser from './api/imageAnalyser.js';
+import FileReader from './api/FileReader.js';
+import SpeechToText from './api/SpeechToText.js';
+import ImageReader from './api/ImageReader.js';
+import TextToSpeech from './api/TextToSpeech.js';
+import BackgroundRemover from './api/BackgroundRemover.js';
+import cluster from 'cluster';
+import os from 'os';
+import cors from 'cors';
+import { createClient } from './api/supabase/client.js';
+
+// Use fileURLToPath to convert import.meta.url to a file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); // Get the directory name
 
 const totalCPUs = os.cpus().length;
-// Serve the swagger.json file statically
-app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
+const app = express();
 
-// Set up Swagger UI
-const swaggerDocument = require('./public/swagger.json');
-const { redirect } = require('express/lib/response.js');
+app.use(cors());
+app.use(express.json());
+
+// Serve the swagger.json file statically
+app.use('/swagger.json', express.static(path.join(__dirname, '/public/swagger.json')));
+
+// Read the swagger.json file using fs
+const swaggerJsonPath = path.join(__dirname, '/public/swagger.json');
+let swaggerDocument = JSON.parse(fs.readFileSync(swaggerJsonPath, 'utf8')); // Synchronously read and parse JSON
+
+// Set up Swagger UI with the loaded Swagger document
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const API_KEY = 'test';
-function verifyApiKey(req, res, next) {
+async function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
 
-    if (apiKey && apiKey === API_KEY) {
-        return next(); // If the key matches, allow the request to continue
+    if (!apiKey) {
+        return res.status(400).json({ message: 'API key is required' });
+    }
+    
+    const supabase = createClient();
+    // Query Supabase for the API key
+    const { data, error } = await supabase
+        .from('api_keys')
+        .select('api_key, user_id')
+        .eq('api_key', apiKey)  // Compare with the provided apiKey
+        .single(); // Single because api_key should be unique
+
+    if (error || !data) {
+        console.error('Error fetching API key from Supabase:', error);
+        return res.status(403).json({ message: 'Forbidden: Invalid API Key' });
     }
 
-    // If the API key is missing or incorrect, respond with an error
-    res.status(403).json({ message: 'Forbidden: Invalid API Key' });
+    // Attach the user_id from the api_key to the request for further use if needed
+    req.userId = data.user_id;
+    next(); // Continue to the next middleware
 }
 
+// API routes
 app.use('/api', verifyApiKey);
-
 app.use('/api/getUser', getUser);
 app.use('/api/chat', chat);
 app.use('/api/imageAnalyser', imageAnalyser);
@@ -51,6 +77,7 @@ app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
+// Cluster setup for multi-core usage
 if (cluster.isPrimary) {
     const workerPIDs = [];
     for (let i = 0; i < totalCPUs; i++) {
@@ -58,7 +85,7 @@ if (cluster.isPrimary) {
         workerPIDs.push(worker.process.pid);
     }
     cluster.on('exit', (worker, code, signal) => {
-      console.log(`worker ${worker.process.pid} died`);
+        console.log(`worker ${worker.process.pid} died`);
     });
     console.log('Worker PIDs:', workerPIDs);
 } else {
@@ -67,5 +94,3 @@ if (cluster.isPrimary) {
         console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
     });
 }
-
-export default app;

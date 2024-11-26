@@ -1,7 +1,6 @@
-const { ApexPainter } = require('apexify.js');
-const express = require('express');
+import { ApexPainter } from 'apexify.js';
+import express from 'express'
 const router = express.Router();
-
 // Middleware to parse JSON bodies
 router.use(express.json());
 
@@ -17,4 +16,4 @@ router.get('/', async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

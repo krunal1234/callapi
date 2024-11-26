@@ -1,9 +1,6 @@
-const express = require('express');
-const { aiVoice } = require('apexify.js/dist/ai/utils');
-const { ApexFileReader } = require('apexify.js');
+import { ApexFileReader } from 'apexify.js';
+import express from 'express';
 const router = express.Router();
-
-// Middleware to parse JSON bodies
 router.use(express.json());
 // Define the POST route to handle requests
 router.get('/', async (req, res) => {
@@ -40,4 +37,4 @@ router.get('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

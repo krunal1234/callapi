@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js"
+    "start": "nodemon ./index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.46.1",
+    "apexify": "^4.2.8",
+    "apexify.js": "^4.5.41",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "nodemon": "^3.1.7",
     "swagger-ui-express": "^5.0.1",
-    "uuid": "^11.0.3",
-     "apexify": "^4.2.8",
-    "apexify.js": "^4.5.41"
+    "uuid": "^11.0.3"
   }
 }

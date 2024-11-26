@@ -1,8 +1,7 @@
-const { ApexListener } = require('apexify/dist/ai/ApexModules');
-const express = require('express');
+import { ApexListener } from 'apexify.js';
+import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
-
 // Middleware to parse JSON bodies
 router.use(express.json());
 
@@ -81,4 +80,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
