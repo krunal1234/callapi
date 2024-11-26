@@ -3,8 +3,8 @@ import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { fileURLToPath } from 'url'; // Import fileURLToPath utility
 import fs from 'fs'; // Import fs module to read the Swagger file
-import getUser from './api/getUser.js';
-import chat from './api/chat.js';
+import GetUser from './api/GetUser.js';
+import Chat from './api/Chat.js';
 import ImageAnalyser from './api/ImageReader.js';
 import FileReader from './api/FileReader.js';
 import SpeechToText from './api/SpeechToText.js';
@@ -64,8 +64,8 @@ async function verifyApiKey(req, res, next) {
 
 // API routes
 app.use('/api', verifyApiKey);
-app.use('/api/getUser', getUser);
-app.use('/api/chat', chat);
+app.use('/api/GetUser', GetUser);
+app.use('/api/Chat', Chat);
 app.use('/api/ImageAnalyser', ImageAnalyser);
 app.use('/api/FileReader', FileReader);
 app.use('/api/SpeechToText', SpeechToText);
@@ -73,15 +73,29 @@ app.use('/api/ImageReader', ImageReader);
 app.use('/api/TextToSpeech', TextToSpeech);
 app.use('/api/BackgroundRemover', BackgroundRemover);
 
-// Worker processes
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
-});
-
 // Root route (Fixes "Cannot GET /" error)
 app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
-export default app;
+// Cluster setup for multi-core usage
+if (cluster.isPrimary) {
+    // Master process - only listen for connections
+    const workerPIDs = [];
+    for (let i = 0; i < totalCPUs; i++) {
+        const worker = cluster.fork();
+        workerPIDs.push(worker.process.pid);
+    }
+    cluster.on('exit', (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+    });
+    console.log('Worker PIDs:', workerPIDs);
+} else {
+    // Worker processes
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
+    });
+}
+
+// export default app;

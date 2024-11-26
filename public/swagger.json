@@ -73,7 +73,7 @@
         }
       }
     },
-    "/api/imageAnalyzer": {
+    "/api/ImageAnalyzer": {
       "post": {
         "tags": ["Models"],
         "summary": "Analyze Image",
@@ -146,7 +146,7 @@
         }
       }
     },
-    "/api/fileReader": {
+    "/api/FileReader": {
       "post": {
         "tags": ["Models"],
         "summary": "Read File from URL",
@@ -192,7 +192,7 @@
         }
       }
     },
-    "/api/chat": {
+    "/api/Chat": {
       "post": {
         "tags": ["Models"],
         "summary": "Chat with GPT-3.5",
@@ -241,52 +241,6 @@
                     "response": {
                       "type": "string",
                       "description": "The GPT-3.5 generated response"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/listenAudio": {
-      "post": {
-        "tags": ["Models"],
-        "summary": "Listen to Audio File",
-        "operationId": "ApexListener",
-        "parameters": [
-          {
-            "name": "audio_url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "URL of the audio file to be processed"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Audio processed successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Data Successful"
-                    },
-                    "user_id": {
-                      "type": "string",
-                      "description": "User ID generated after processing the audio"
                     }
                   }
                 }
