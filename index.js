@@ -22,7 +22,8 @@ const swaggerOptions = {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
 
-app.use('/swagger.json', express.static(path.join(null, 'swagger.json')));
+app.use('/swagger.json', express.static(path.join(__dirname, 'public/swagger.json')));
+
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
