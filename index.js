@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const SwaggerUIBundle = require('swagger-ui-express');
+const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const fs = require('fs');
 const getUser = require('./api/getUser.js');
@@ -24,11 +24,12 @@ app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
 const swaggerDocument = require('./public/swagger.json');
 const { redirect } = require('express/lib/response.js');
 app.use('/api-docs',
-    SwaggerUIBundle.serve,
-    SwaggerUIBundle.setup(swaggerDocument, {
+    swaggerUI.serve,
+    swaggerUI.setup(swaggerDocument, {
         customCss: '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
         customCssUrl: swaggerUICss
     }))
+
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
