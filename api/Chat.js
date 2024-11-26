@@ -1,5 +1,5 @@
 
-import { ApexChat } from 'apexify.js';
+import { ApexChat } from 'apexify';
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 const router = express.Router();
@@ -8,7 +8,7 @@ router.use(express.json());
 
 // Define the POST route to handle requests
 router.post('/', async (req, res) => {
-    const { related_content, ApiKey, question } = req.body;
+    const { related_content, ApiKey, question } = req.query;
 
     // Generate a unique requestId for tracking
     const requestId = uuidv4();
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         }
 
         // Call the ApexChat function with the provided parameters
-        const response = await ApexChat("gpt-3.5-turbo", `
+        const response = await ApexChat("gpt-4o-mini", `
         Content : ${related_content}
 
         Question : ${question}

@@ -7,16 +7,16 @@ router.use(express.json());
 
 // Define the POST route to handle requests
 router.post('/', async (req, res) => {
-    const { imagePath, question } = req.body;
+    const { imagePath, question } = req.query;
     const requestId = uuidv4(); // Unique request identifier for easier tracking
 
     const startTime = Date.now(); 
     try {
-        console.log('ApexImageAnalyzer Request:', { imagePath, question, ApiKey });
+        console.log('ApexImageAnalyzer Request:', { imagePath, question });
         
         const response = await ApexImageAnalyzer({
             imgURL: imagePath,
-            ApiKey: ApiKey,
+            ApiKey: '',
             prompt: question
         });
         

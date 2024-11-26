@@ -7,11 +7,11 @@ router.use(express.json());
 
 // Define the POST route to handle requests
 router.post('/', async (req, res) => {
-    const { filePath } = req.body; // Expecting `filePath` in the request body
+    const { file_url } = req.query; // Expecting `file_url` in the request body
     const requestId = uuidv4(); // Unique request identifier for easier tracking
 
     // Default PDF URL if none provided
-    const fileURL = filePath || 'https://pdfobject.com/pdf/sample.pdf';
+    const fileURL = file_url || 'https://pdfobject.com/pdf/sample.pdf';
     
     const startTime = Date.now(); // Track start time for execution time calculation
 
