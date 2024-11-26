@@ -27,7 +27,7 @@
     }
   ],
   "paths": {
-    "/api/imageReader": {
+    "/api/ImageReader": {
       "post": {
         "tags": ["Models"],
         "summary": "Read Image from URL",
