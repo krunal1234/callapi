@@ -73,6 +73,12 @@ app.use('/api/ImageReader', ImageReader);
 app.use('/api/TextToSpeech', TextToSpeech);
 app.use('/api/BackgroundRemover', BackgroundRemover);
 
+// Worker processes
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
+});
+
 // Root route (Fixes "Cannot GET /" error)
 app.get('/', (req, res) => {
     res.redirect('/api-docs');
