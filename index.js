@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const swaggerUi = require('swagger-ui-express');
+const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const fs = require('fs');
 const getUser = require('./api/getUser.js');
