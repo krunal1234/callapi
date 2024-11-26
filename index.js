@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'; // Import fileURLToPath utility
 import fs from 'fs'; // Import fs module to read the Swagger file
 import getUser from './api/getUser.js';
 import chat from './api/chat.js';
-import imageAnalyser from './api/imageAnalyser.js';
+import imageAnalyser from './api/ImageReader.js';
 import FileReader from './api/FileReader.js';
 import SpeechToText from './api/SpeechToText.js';
 import ImageReader from './api/ImageReader.js';
