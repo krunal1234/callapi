@@ -13,6 +13,7 @@ const TextToSpeech = require('./api/TextToSpeech.js');
 const BackgroundRemover = require('./api/BackgroundRemover.js');
 const cluster = require('cluster');
 const os = require('os');
+const swaggerUICss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 const totalCPUs = os.cpus().length;
 
@@ -22,8 +23,12 @@ app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
 // Set up Swagger UI
 const swaggerDocument = require('./public/swagger.json');
 const { redirect } = require('express/lib/response.js');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use('/api-docs',
+    swaggerUI.serve,
+    swaggerUI.setup(swaggerDocument, {
+        customCss: '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
+        customCssUrl: swaggerUICss
+    }))
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
