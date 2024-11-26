@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const swaggerUI = require('swagger-ui-express');
+const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 const fs = require('fs');
 const getUser = require('./api/getUser.js');
@@ -13,22 +13,15 @@ const TextToSpeech = require('./api/TextToSpeech.js');
 const BackgroundRemover = require('./api/BackgroundRemover.js');
 const cluster = require('cluster');
 const os = require('os');
-const swaggerUICss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 const totalCPUs = os.cpus().length;
-
 // Serve the swagger.json file statically
 app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
 
 // Set up Swagger UI
-const swaggerDocument = require('./public/swagger.json');
+const swaggerDocument = require('./swagger.json');
 const { redirect } = require('express/lib/response.js');
-app.use('/api-docs',
-    swaggerUI.serve,
-    swaggerUI.setup(swaggerDocument, {
-        customCss: '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
-        customCssUrl: swaggerUICss
-    }))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
