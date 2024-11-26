@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'; // Import fileURLToPath utility
 import fs from 'fs'; // Import fs module to read the Swagger file
 import GetUser from './api/GetUser.js';
 import Chat from './api/Chat.js';
-import ImageAnalyser from './api/ImageReader.js';
+import ImageAnalyzer from './api/ImageAnalyzer.js';
 import FileReader from './api/FileReader.js';
 import SpeechToText from './api/SpeechToText.js';
 import ImageReader from './api/ImageReader.js';
@@ -66,7 +66,7 @@ async function verifyApiKey(req, res, next) {
 app.use('/api', verifyApiKey);
 app.use('/api/GetUser', GetUser);
 app.use('/api/Chat', Chat);
-app.use('/api/ImageAnalyser', ImageAnalyser);
+app.use('/api/ImageAnalyzer', ImageAnalyzer);
 app.use('/api/FileReader', FileReader);
 app.use('/api/SpeechToText', SpeechToText);
 app.use('/api/ImageReader', ImageReader);
@@ -98,4 +98,4 @@ if (cluster.isPrimary) {
     });
 }
 
-// export default app;
+export default app;
