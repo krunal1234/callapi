@@ -14,7 +14,7 @@
   },
   "static": {
     "directory": "public"
-  }
+  },
   "routes": [
     {
       "src": "/swagger.json",
