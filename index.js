@@ -17,7 +17,7 @@ import os from 'os';
 const totalCPUs = os.cpus().length;
 // Use Swagger UI and point to the external swagger.json URL
 const swaggerOptions = {
-  swaggerUrl: '/swagger.json',
+  swaggerUrl: '/public/swagger.json',
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
