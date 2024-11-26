@@ -11,17 +11,19 @@ const SpeechToText = require('./api/SpeechToText.js');
 const ImageReader = require('./api/ImageReader.js');
 const TextToSpeech = require('./api/TextToSpeech.js');
 const BackgroundRemover = require('./api/BackgroundRemover.js');
-import cluster from 'cluster';
-import os from 'os';
+const cluster = require('cluster');
+const os = require('os');
 
 const totalCPUs = os.cpus().length;
-// Use Swagger UI and point to the external swagger.json URL
-// Swagger setup
-const swaggerDocument = require('./public/swagger.json');
+
+// Serve the swagger.json file statically
+app.use('/swagger.json', express.static(path.join(__dirname, 'swagger.json')));
+
+// Set up Swagger UI
+const swaggerDocument = require('./swagger.json');
+const { redirect } = require('express/lib/response.js');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Serve static files (Swagger JSON)
-app.use('/swagger.json', express.static(path.join(__dirname, 'public/swagger.json')));
 const API_KEY = 'test';
 function verifyApiKey(req, res, next) {
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
@@ -50,8 +52,6 @@ app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
-
-// Start server in cluster mode
 if (cluster.isPrimary) {
     const workerPIDs = [];
     for (let i = 0; i < totalCPUs; i++) {
