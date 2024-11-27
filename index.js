@@ -103,9 +103,7 @@ app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
-// Cluster setup for multi-core usage
 if (cluster.isPrimary) {
-    // Master process - only listen for connections
     const workerPIDs = [];
     for (let i = 0; i < totalCPUs; i++) {
         const worker = cluster.fork();
@@ -116,10 +114,10 @@ if (cluster.isPrimary) {
     });
     console.log('Worker PIDs:', workerPIDs);
 } else {
-    // Worker processes
+    // Workers handle their own listening
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT} with PID: ${process.pid}`);
+        console.log(`Worker process listening on port ${PORT} with PID: ${process.pid}`);
     });
 }
 
