@@ -16,8 +16,6 @@ import os from 'os';
 import cors from 'cors';
 import { createClient } from './api/supabase/client.js';
 import { createWorker } from 'tesseract.js';
-
-const tesseractCorePath = path.join(__dirname, 'node_modules/tesseract.js-core/tesseract-core-simd.wasm'); // Update with correct path
 // Use fileURLToPath to convert import.meta.url to a file path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // Get the directory name
@@ -34,6 +32,7 @@ app.use('/swagger.json', express.static(path.join(__dirname, '/public/swagger.js
 
 // Read the swagger.json file using fs
 const swaggerJsonPath = path.join(__dirname, '/public/swagger.json');
+const tesseractCorePath = path.join(__dirname, 'node_modules/tesseract.js-core/tesseract-core-simd.wasm'); // Update with correct path
 let swaggerDocument = JSON.parse(fs.readFileSync(swaggerJsonPath, 'utf8')); // Synchronously read and parse JSON
 
 // Set up Swagger UI with the loaded Swagger document
