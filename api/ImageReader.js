@@ -5,7 +5,14 @@ const router = express.Router();
 // Middleware to parse JSON bodies
 router.use(express.json());
 router.get('/', async (req, res) => {
-    try {
+    try{
+    const { imagePath } = req.body; // You can expect `imagePath` to be part of the request body
+    const requestId = uuidv4(); // Unique request identifier for easier tracking
+
+    // Set a default image URL in case the body does not include it
+    const imageURL = imagePath || 'https://www.investopedia.com/thmb/RPWROSmYFssYV0VJAD3TEavQ-K4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Marketing-recirc-blue-77cc4c488cf14d4686691e82219f80cf.jpg';
+  
+    const startTime = Date.now();
         res.status(200).json({
             statusCode: 200,
             success: true,
