@@ -18,7 +18,7 @@ import { createClient } from './api/supabase/client.js';
 import { createWorker } from 'tesseract.js';
 
 (async () => {
-  const worker = await createWorker('eng');
+  const worker = await createWorker({ logger: m => console.log(m) });  // Default worker
   const ret = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
   console.log(ret.data.text);
   await worker.terminate();
