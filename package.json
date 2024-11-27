@@ -13,7 +13,6 @@
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.46.1",
-    "tesseract.js-core": "^5.1.1",
     "apexify.js": "^4.5.41",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
