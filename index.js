@@ -19,14 +19,12 @@ import { createClient } from './api/supabase/client.js';
 // Use fileURLToPath to convert import.meta.url to a file path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // Get the directory name
-const wasmPath = path.resolve(__dirname, 'node_modules/tesseract.js-core/tesseract-core-simd.wasm');
 const totalCPUs = os.cpus().length;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
-const wasmPath = path.resolve(__dirname, 'node_modules/tesseract.js-core/tesseract-core-simd.wasm');
 
 // Serve the swagger.json file statically
 app.use('/swagger.json', express.static(path.join(__dirname, '/public/swagger.json')));
