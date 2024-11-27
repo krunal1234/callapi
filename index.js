@@ -37,14 +37,29 @@ let swaggerDocument = JSON.parse(fs.readFileSync(swaggerJsonPath, 'utf8')); // S
 // Set up Swagger UI with the loaded Swagger document
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+async function increaseValueByOne(userId) {
+    // Call the increment function via RPC
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+        .rpc('increment_api_call_count', { p_user_id: userId });  // Pass user_id as p_user_id to the RPC function
+
+    if (error) {
+        console.error("Error updating apiCallCount:", error);
+    } else {
+        console.log("apiCallCount incremented successfully:", data); // The response might be null, but the increment happens on the server
+    }
+}
+
 async function verifyApiKey(req, res, next) {
+    const supabase = createClient();
+    
     const apiKey = req.headers['api-key']; // Look for 'api-key' in the request headers
 
     if (!apiKey) {
         return res.status(400).json({ message: 'API key is required' });
     }
     
-    const supabase = createClient();
     // Query Supabase for the API key
     const { data, error } = await supabase
         .from('api_keys')
@@ -55,6 +70,8 @@ async function verifyApiKey(req, res, next) {
     if (error || !data) {
         console.error('Error fetching API key from Supabase:', error);
         return res.status(403).json({ message: 'Forbidden: Invalid API Key' });
+    }else{
+        increaseValueByOne(data.user_id);
     }
 
     // Attach the user_id from the api_key to the request for further use if needed
