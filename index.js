@@ -17,13 +17,7 @@ import cors from 'cors';
 import { createClient } from './api/supabase/client.js';
 import { createWorker } from 'tesseract.js';
 
-(async () => {
-  const worker = await createWorker({ logger: m => console.log(m) });  // Default worker
-  const ret = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
-  console.log(ret.data.text);
-  await worker.terminate();
-})();
-
+const tesseractCorePath = path.join(__dirname, 'node_modules/tesseract.js-core/tesseract-core-simd.wasm'); // Update with correct path
 // Use fileURLToPath to convert import.meta.url to a file path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // Get the directory name
