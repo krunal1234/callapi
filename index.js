@@ -11,6 +11,7 @@ import SpeechToText from './api/SpeechToText.js';
 import ImageReader from './api/ImageReader.js';
 import TextToSpeech from './api/TextToSpeech.js';
 import BackgroundRemover from './api/BackgroundRemover.js';
+import GenerateImage from './api/GenerateImage.js';
 import cluster from 'cluster';
 import os from 'os';
 import cors from 'cors';
@@ -90,6 +91,7 @@ app.use('/api/SpeechToText', SpeechToText);
 app.use('/api/ImageReader', ImageReader);
 app.use('/api/TextToSpeech', TextToSpeech);
 app.use('/api/BackgroundRemover', BackgroundRemover);
+app.use('/api/GenerateImage', GenerateImage);
 
 // Root route (Fixes "Cannot GET /" error)
 app.get('/', (req, res) => {
