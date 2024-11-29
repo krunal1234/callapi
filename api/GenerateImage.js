@@ -9,6 +9,8 @@ router.use(express.json());
 router.post('/', async (req, res) => {
     const { ApiKey, model, prompt } = req.query;
     const requestId = uuidv4(); // Unique request identifier for easier tracking
+    const startTime = Date.now();
+
     const imageOptions = {
     count: 1,                // generates 2 images by default
     nsfw: false,            // Enable or disable NSFW content
