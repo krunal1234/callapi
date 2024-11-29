@@ -80,6 +80,23 @@
         "operationId": "ApexImageAnalyzer",
         "parameters": [
           {
+            "name": "ApiKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          },{
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Enter model for image generate"
+            }
+          },
+          {
             "name": "imagePath",
             "in": "query",
             "required": true,
@@ -199,6 +216,23 @@
         "operationId": "ApexChat",
         "parameters": [
           {
+            "name": "ApiKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          },{
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Enter model for image generate"
+            }
+          },
+          {
             "name": "related_content",
             "in": "query",
             "required": true,
@@ -214,15 +248,6 @@
             "schema": {
               "type": "string",
               "description": "The question to ask GPT"
-            }
-          },
-          {
-            "name": "ApiKey",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "API Key for authentication"
             }
           }
         ],
@@ -241,6 +266,276 @@
                     "response": {
                       "type": "string",
                       "description": "The GPT-3.5 generated response"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/AudioProcessor": {
+      "post": {
+        "tags": ["Models"],
+        "summary": "Process Audio File",
+        "operationId": "ApexAudioProcessor",
+        "parameters": [
+          {
+            "name": "ApiKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          },{
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Enter model for image generate"
+            }
+          },
+          {
+            "name": "filepath",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The path to the audio file to be processed"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The language for processing the audio"
+            }
+          },
+          {
+            "name": "prompt",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Prompt to guide the audio processing"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audio processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Audio processed successfully"
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "audioId": {
+                          "type": "string",
+                          "description": "Unique ID of the processed audio"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "executionTime": {
+                      "type": "integer",
+                      "description": "The execution time in milliseconds"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/TextToSpeech": {
+      "post": {
+        "tags": ["Models"],
+        "summary": "Process Audio File",
+        "operationId": "ApexListener",
+        "parameters": [
+          {
+            "name": "ApiKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          },{
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Enter model for image generate"
+            }
+          },
+          {
+            "name": "textFile",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The path to the audio file to be processed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audio processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Audio processed successfully"
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "audioId": {
+                          "type": "string",
+                          "description": "Unique ID of the processed audio"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "executionTime": {
+                      "type": "integer",
+                      "description": "The execution time in milliseconds"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/GenerateImage": {
+      "post": {
+        "tags": ["Models"],
+        "summary": "Image Generate",
+        "operationId": "ApexImagine",
+        "parameters": [
+          {
+            "name": "ApiKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "API Key for authentication"
+            }
+          },{
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Enter model for image generate"
+            }
+          },
+          {
+            "name": "prompt",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "What you want to create"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Image processed successfully"
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "audioId": {
+                          "type": "string",
+                          "description": "Unique ID of the processed audio"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "executionTime": {
+                      "type": "integer",
+                      "description": "The execution time in milliseconds"
                     }
                   }
                 }
