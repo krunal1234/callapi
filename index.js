@@ -4,10 +4,9 @@ import path from 'path';
 import { fileURLToPath } from 'url'; // Import fileURLToPath utility
 import fs from 'fs'; // Import fs module to read the Swagger file
 import GetUser from './api/GetUser.js';
-import Chat from './api/Chat.js';
 import ImageAnalyzer from './api/ImageAnalyzer.js';
 import FileReader from './api/FileReader.js';
-import SpeechToText from './api/SpeechToText.js';
+import AudioProcessor from './api/AudioProcessor.js';
 import ImageReader from './api/ImageReader.js';
 import TextToSpeech from './api/TextToSpeech.js';
 import BackgroundRemover from './api/BackgroundRemover.js';
@@ -18,7 +17,7 @@ import cors from 'cors';
 import { createClient } from './api/supabase/client.js';
 import { createWorker } from 'tesseract.js';
 // Use fileURLToPath to convert import.meta.url to a file path
-const __filename = fileURLToPath(import.meta.url);
+const __filename =  fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // Get the directory name
 
 const totalCPUs = os.cpus().length;
@@ -84,10 +83,9 @@ async function verifyApiKey(req, res, next) {
 // API routes
 app.use('/api', verifyApiKey);
 app.use('/api/GetUser', GetUser);
-app.use('/api/Chat', Chat);
 app.use('/api/ImageAnalyzer', ImageAnalyzer);
 app.use('/api/FileReader', FileReader);
-app.use('/api/SpeechToText', SpeechToText);
+app.use('/api/AudioProcessor', AudioProcessor);
 app.use('/api/ImageReader', ImageReader);
 app.use('/api/TextToSpeech', TextToSpeech);
 app.use('/api/BackgroundRemover', BackgroundRemover);
